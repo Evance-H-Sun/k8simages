@@ -1,0 +1,21 @@
+## Adding new url of docker image here
+urls=(
+gcr.io/google-containers/hyperkube:v1.9.5
+gcr.io/google_containers/pause-amd64:3.0
+gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.8
+gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.8
+gcr.io/google_containers/k8s-dns-sidecar-amd64:1.14.8
+)
+
+for url in ${urls[@]}
+do
+  image=$(basename $url)
+  
+  if [ -f ${image} ]
+  then
+    echo "Dockerfile exists: ${image}"
+  else
+    echo "Creating Dockerfile: ${image}"
+    echo "FROM ${url}" > $image
+  fi
+done
